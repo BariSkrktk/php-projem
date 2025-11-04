@@ -20,7 +20,7 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Tarih</th>
+                <td scope="col">Tarih</td>
                 <th scope="col">Başlık</th>
                 <th scope="col">Açıklama</th>
                 <th scope="col">Durum</th>
@@ -30,7 +30,7 @@
             <?php foreach ($tasks as $task): ?>
                 <tr>
                     <th scope="row"><?php echo $task['id']; ?></th>
-                    <th scope="row"><?php echo $task['created_at']; ?></th>
+                    <td scope="row"><?php echo $Carbon::parse($task['created_at'])->translatedFormat('d F Y'); ?></td>
                     <td><?php echo $task['title']; ?></td>
                     <td><?php echo $task['description']; ?></td>
                     <td>

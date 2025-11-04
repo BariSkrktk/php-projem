@@ -14,5 +14,7 @@
       "name": "bariskrktk"
     }
   ],
-  "require": {}
+  "require": {
+    "nesbot/carbon": "^3.10"
+  }
 }
