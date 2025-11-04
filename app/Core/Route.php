@@ -13,31 +13,34 @@ class Route
 
     public static function dispatch($uri)
     {
-        if (!isset(self::$routes[$uri])) {
-            http_response_code(404);
-            echo "404 Not Found - Route bulunamadı";
-            return;
-        }
+        foreach (self::$routes as $route => $controllerAction) {
+            // {id} gibi dinamik parametreleri regex'e çevir
+            $pattern = preg_replace('/\{[a-zA-Z0-9_]+\}/', '([a-zA-Z0-9-_]+)', $route);
+            $pattern = str_replace('/', '\/', $pattern);
+            $pattern = '/^' . $pattern . '$/';
 
-        $action = self::$routes[$uri];
+            if (preg_match($pattern, $uri, $matches)) {
+                array_shift($matches); // İlk eşleşme URI'nin tamamı, onu çıkar
+                [$controller, $method] = explode('@', $controllerAction);
+                $controller = 'App\\Controllers\\' . $controller;
 
-        // "Front\TaskController@index" gibi bir ifade geldiyse parçala
-        if (is_string($action) && strpos($action, '@') !== false) {
-            list($controller, $method) = explode('@', $action);
-
-            // Burada otomatik olarak App\Controllers\ prefix ekliyoruz
-            $controller = "App\\Controllers\\" . $controller;
-
-            if (class_exists($controller)) {
-                $instance = new $controller();
-                if (method_exists($instance, $method)) {
-                    return $instance->$method();
+                if (class_exists($controller)) {
+                    $instance = new $controller();
+                    if (method_exists($instance, $method)) {
+                        return call_user_func_array([$instance, $method], $matches);
+                    } else {
+                        echo "404 Not Found - Metot bulunamadı";
+                        return;
+                    }
                 } else {
-                    echo "404 Not Found - Metot bulunamadı";
+                    echo "404 Not Found - Sınıf bulunamadı";
+                    return;
                 }
-            } else {
-                echo "404 Not Found - Sınıf bulunamadı";
             }
         }
+
+        // Hiçbir eşleşme yoksa
+        http_response_code(404);
+        echo "404 Not Found - Route bulunamadı";
     }
 }

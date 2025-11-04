@@ -8,9 +8,11 @@ Route::add('/', 'Front\HomeController@index');
 Route::add('about', 'Front\HomeController@index');
 Route::add('example', 'Front\ExampleController@index');
 Route::add('task', 'Front\TaskController@index');
+Route::add('tasks', 'Front\TaskController@index');
 Route::add('create/task', 'Front\TaskController@create');
-
-
+Route::add('update/task/{id}', 'Front\TaskController@update');
+Route::add('tasks/create', 'Front\TaskController@create');
+Route::add('delete/task/{id}', 'Front\TaskController@delete');
 
 
 //Route Oluşturma

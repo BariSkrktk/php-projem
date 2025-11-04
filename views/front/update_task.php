@@ -1,5 +1,5 @@
 <div class="container mb-5">
-    <h1>Yeni Görev Ekleme</h1>
+    <h1>Görev Güncelleme</h1>
 
     <?php if (isset($error)): ?>
         <div class="alert alert-danger mt-3" role="alert">
@@ -16,17 +16,15 @@
     <form action="" method="POST">
         <div class="form-group">
             <label for="title">Başlık</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Görev başlığını girin">
+            <input type="text" class="form-control" id="title" name="title" value="<?php echo isset($task['title']) ? $task['title'] : '' ?>">
         </div>
 
         <div class="form-group">
             <label for="description">Açıklama</label>
-            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Görev açıklamasını girin"></textarea>
+            <textarea class="form-control" id="description" name="description" rows="4"><?php echo isset($task['description']) ? $task['description'] : '' ?></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary mt-2">Görev Oluştur</button>
-        <a href="/tasks" class="btn btn-danger mt-2">
-            <i class="fas fa-arrow-left"></i> Geri Dön
-        </a>
+        <a href="/tasks" class="btn mt-2" style="background-color: #dc3545; color: white;">Geri Dön</a>
     </form>
 </div>
