@@ -7,6 +7,8 @@ use App\Core\Route;
 Route::add('/', 'Front\HomeController@index');
 Route::add('about', 'Front\HomeController@index');
 Route::add('example', 'Front\ExampleController@index');
+Route::add('task', 'Front\TaskController@index');
+Route::add('create/task', 'Front\TaskController@create');
 
 
 
